@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="author" content="Kenua">
+   <title>Countdown Timer</title>
+   <!--GOOGLE FONTS-->
+   <script src="https://kit.fontawesome.com/1e576699d7.js" crossorigin="anonymous"></script>
+   <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@600&family=Roboto+Condensed:wght@300&family=Roboto+Slab&family=Dosis:wght@700&display=swap" rel="stylesheet">
+   <!--CUSTOM-->
+   <link href="css/main.css" rel="stylesheet">
+   <!--SCRIPTS-->
+   <script type="text/javascript" src="scripts/timer.js" defer></script>
+   <script type="text/javascript" src="scripts/domTimerControls.js" defer></script>
+</head>
+<body>
+   <!--STICKTY DISPLAY-->
+   <div class="display-container display-container--sticky wrapper" id="sticky-display">
+      <h1 class="display__task-name task-parag">Task will start in:</h1>
+      <div class="display">
+         <div class="display__digit">
+            <p class="hour-digits">00:</p>
+         </div>
+         <div class="display__digit">
+            <p class="minu-digits">00:</p>
+         </div>
+         <div class="display__digit">
+            <p class="seco-digits">00</p>
+         </div>
+         <div class="display__digit display__digit--days">
+            <p class="days-digits">d00</p>
+         </div>
+      </div>
+   </div><!--.sticky-display-->
+   <!--NORMAL DISPLAY-->
+   <section class="display-container wrapper">
+      <h1 class="display__task-name task-parag">Task will start in:</h1>
+      <div class="display" id="display">
+         <div class="display__digit">
+            <p class="hour-digits" id="hour-digit">00:</p>
+         </div>
+         <div class="display__digit">
+            <p class="minu-digits" id="minu-digit">00:</p>
+         </div>
+         <div class="display__digit">
+            <p class="seco-digits" id="seco-digit">00</p>
+         </div>
+         <div class="display__digit display__digit--days">
+            <p class="days-digits" id="days-digit">d00</p>
+         </div>
+      </div><!--.display-->
+
+      <a href="#" class="button" id="start-timer-btn">Start</a>
+      <a href="#" class="button" id="open-controls-btn">Change time <span class="down-arrow fas fa-angle-down" id="down-arrow"></span></a>
+   </section><!--.display-container-->
+   <!--CONTROLS-->
+   <section class="controls-container controls-container--close wrapper" id="controls-container">
+      <h2 class="controls__heading">Event name</h2>
+
+      <div class="controls__input">
+         <div class="input__content">
+            <input type="text" id="event-name" placeholder="Task, Birthday, anniversary" value="Task">
+            <label for="event-name">TASK</label>
+         </div>
+      </div>
+
+      <h2 class="controls__heading">Set time (Days - Hours - Minutes - Seconds)</h2>
+      <div class="controls__input">
+         <div class="input__content">
+            <input type="text" id="days-input" placeholder="Days">
+            <label for="days-input">D</label>
+         </div>
+      </div>
+
+      <div class="controls__input">
+         <div class="input__content">
+            <input type="text" id="hour-input" placeholder="Hours">
+            <label for="hour-input">H</label>
+         </div>
+      </div>
+
+      <div class="controls__input">
+         <div class="input__content">
+            <input type="text" id="minu-input" placeholder="Minutes">
+            <label for="minu-input">M</label>
+         </div>
+      </div>
+
+      <div class="controls__input">
+         <div class="input__content">
+            <input type="text" id="seco-input" placeholder="Seconds">
+            <label for="seco-input">S</label>
+         </div>
+      </div>
+
+      <a href="#" class="button" id="set-time-btn">Set time</a>
+   </section><!--.controls-->
+</body>
+</html>

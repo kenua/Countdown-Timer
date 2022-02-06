@@ -1,17 +1,14 @@
 let timer = new Timer();
-
-// ## digits
+// # DIGITS
 const daysDigits = document.querySelectorAll('.days-digits'),
       hourDigits = document.querySelectorAll('.hour-digits'),
       minuDigits = document.querySelectorAll('.minu-digits'),
       secoDigits = document.querySelectorAll('.seco-digits');
-
-// ## buttons
+// # BUTTONS
 const startTimerBtn = document.querySelector('#start-timer-btn'),
       setTimeBtn = document.querySelector('#set-time-btn'),
       openControlsBtn = document.querySelector('#open-controls-btn');
-
-// ## inputs
+// # INPUTS
 const eventNameInput = document.querySelector('#event-name'),
       daysInput = document.querySelector('#days-input'),
       hourInput = document.querySelector('#hour-input'),
@@ -28,16 +25,17 @@ let timerOn = false;
 function updateTaskParag() {
    let value = eventNameInput.value.trim();
    eventName = value;
-   document.querySelectorAll('.task-parag')[0].innerHTML = eventName + eventDefaultValue;
-   document.querySelectorAll('.task-parag')[1].innerHTML = eventName + eventDefaultValue;
 
    if (value.length <= 0) {
       document.querySelectorAll('.task-parag')[0].innerHTML = 'Task' + eventDefaultValue;
       document.querySelectorAll('.task-parag')[1].innerHTML = 'Task' + eventDefaultValue;
+   } else {
+      document.querySelectorAll('.task-parag')[0].innerHTML = eventName + eventDefaultValue;
+      document.querySelectorAll('.task-parag')[1].innerHTML = eventName + eventDefaultValue;      
    }
 }
 
-function setTimerDigits() {
+function printTimerDigits() {
    let addZero = function(number) {
       if (number < 10) return '0' + number;
       return number;
@@ -54,13 +52,10 @@ function setTimerDigits() {
    secoDigits[1].textContent = addZero(timer.seconds);
 }
 
-// ## DOM events
-eventNameInput.addEventListener('keyup', updateTaskParag);
-
-startTimerBtn.addEventListener('click', function(evt) {
+function startTimer(evt) {
    evt.preventDefault();
    if (!timerOn) { // turn on timer
-      timer.start(setTimerDigits);
+      timer.start(printTimerDigits);
       startTimerBtn.textContent = 'Stop';
       timerOn = true;
    } else { // turn off timer
@@ -68,19 +63,17 @@ startTimerBtn.addEventListener('click', function(evt) {
       startTimerBtn.textContent = 'Start';
       timerOn = false;
    }
-});
+}
 
-setTimeBtn.addEventListener('click', function(evt) {
+function setTime(evt) {
    evt.preventDefault();
 
    let inputs = [hourInput, minuInput, secoInput];
    let inputsValue = [];
    let daysValue = (!isNaN(daysInput.value) ? Math.floor(Number(daysInput.value)) : 0);
-
    // fix days value range
    if (daysValue < 0) daysValue = 0;
    daysInput.value = daysValue;
-   
    // fix inputs value range
    inputs.forEach((input, index) => {
       inputsValue.push((!isNaN(input.value)) ? Math.floor(Number(input.value)) : 0);
@@ -92,23 +85,20 @@ setTimeBtn.addEventListener('click', function(evt) {
          input.value = 59;
       }
    });
-
    // fix hours value range
    if (inputsValue[0] >= 24) inputsValue[0] = 23;
    hourInput.value = inputsValue[0];
-
    timer.setTime(
       daysValue,
       inputsValue[0],
       inputsValue[1],
       inputsValue[2]
    );
-   
    //console.log(timer.days, timer.hours, timer.minutes, timer.seconds);
-   setTimerDigits();
-});
+   printTimerDigits();
+}
 
-openControlsBtn.addEventListener('click', function(evt) {
+function showControls() {
    if (controlsContainer.classList.contains('controls-container--close')) { // open
       controlsContainer.classList.remove('controls-container--close');
       document.querySelector('#down-arrow').style.transform = 'rotateX(190deg)';
@@ -116,13 +106,9 @@ openControlsBtn.addEventListener('click', function(evt) {
       controlsContainer.classList.add('controls-container--close');
       document.querySelector('#down-arrow').style.transform = 'rotateX(0deg)';
    }
-});
+}
 
-// Hide and show stickyDisplay
-// Maybe this is a vague implementation of funtionality, check out this: https://developer.mozilla.org/docs/Mozilla/Performance/ScrollLinkedEffects
-let displayHeight = display.offsetHeight;
-
-window.addEventListener('scroll', function() {
+function showStickyDisplay() {
    let windowHeight = window.pageYOffset;
 
    if (windowHeight > displayHeight) {
@@ -130,6 +116,15 @@ window.addEventListener('scroll', function() {
    } else {
       stickyDisplay.style.transform = 'translate(0, -150px)';
    }
-});
+}
+// # DOM EVENTS
+eventNameInput.addEventListener('keyup', updateTaskParag);
+startTimerBtn.addEventListener('click', startTimer);
+setTimeBtn.addEventListener('click', setTime);
+openControlsBtn.addEventListener('click', showControls);
+// Hide and show stickyDisplay
+// Maybe this is a vague implementation of funtionality, check out this: https://developer.mozilla.org/docs/Mozilla/Performance/ScrollLinkedEffects
+let displayHeight = display.offsetHeight;
 
+window.addEventListener('scroll', showStickyDisplay);
 updateTaskParag();

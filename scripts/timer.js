@@ -24,21 +24,20 @@ class Timer {
          this.updateValues(d);
          //console.log(this._date);
       }
+      return;
    }
 
-   start(func = undefined) {
-      this._interval = setInterval(() => {
-         // run function argument if it exists
+   start(callback = null) {
+      let count = function(callback) {
          try {
-            if (func) func();
+            if (callback) callback(this);
          } catch (e) {
             console.log('Error: first argument is not a function :(');
          }
-
          // Decrement time values
          if (this.days == 0  && this.hours == 0 && this.minutes == 0 && this.seconds == 0) { // stop timer
             this.updateValues(this.days);
-            this.stop();
+            return this;
          } else if (this.days >= 1 && this.hours == 0 && this.minutes == 0 && this.seconds == 0) { // decrement days
             this._date.setTime(new Date(0, 0, 0, 23, 59, 59).getTime());
             this.days--;
@@ -47,11 +46,17 @@ class Timer {
             this._date.setTime((this._date.getTime() - 1000));
             this.updateValues(this.days);
          }
-      }, 1000);
+
+         this._interval = setTimeout(() => count.call(this, callback), 1000);
+      }
+      
+      this._interval = setTimeout(() => count.call(this, callback), 1000);
+      return this;
    }
 
    stop() {
-      clearInterval(this._interval);
+      clearTimeout(this._interval);
+      return this;
    }
 }// Timer class
 

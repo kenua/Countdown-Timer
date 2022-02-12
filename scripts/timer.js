@@ -47,10 +47,10 @@ class Timer {
             this.updateValues(this.days);
          }
 
-         this._interval = setTimeout(() => count.call(this, callback), 1000);
+         this._interval = setTimeout(count.bind(this, callback), 1000);
       }
       
-      this._interval = setTimeout(() => count.call(this, callback), 1000);
+      this._interval = setTimeout(count.bind(this, callback), 1000);
       return this;
    }
 

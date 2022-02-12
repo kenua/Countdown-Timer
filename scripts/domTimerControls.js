@@ -52,16 +52,20 @@ function printTimerDigits() {
    secoDigits[1].textContent = addZero(timer.seconds);
 }
 
+function resetTimer() {
+   startTimerBtn.textContent = 'Start';
+   timerOn = false;
+}
+
 function startTimer(evt) {
    evt.preventDefault();
    if (!timerOn) { // turn on timer
-      timer.start(printTimerDigits);
+      timer.start(printTimerDigits, resetTimer);
       startTimerBtn.textContent = 'Stop';
       timerOn = true;
    } else { // turn off timer
       timer.stop();
-      startTimerBtn.textContent = 'Start';
-      timerOn = false;
+      resetTimer();
    }
 }
 

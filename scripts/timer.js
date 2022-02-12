@@ -27,7 +27,7 @@ class Timer {
       return;
    }
 
-   start(callback = null) {
+   start(callback = null, finishCallback = null) {
       let count = function(callback) {
          try {
             if (callback) callback(this);
@@ -37,6 +37,11 @@ class Timer {
          // Decrement time values
          if (this.days == 0  && this.hours == 0 && this.minutes == 0 && this.seconds == 0) { // stop timer
             this.updateValues(this.days);
+            try {
+               if (finishCallback) finishCallback(this);
+            } catch (e) {
+               console.log('Error: second argument is not a function :(');
+            }
             return this;
          } else if (this.days >= 1 && this.hours == 0 && this.minutes == 0 && this.seconds == 0) { // decrement days
             this._date.setTime(new Date(0, 0, 0, 23, 59, 59).getTime());
